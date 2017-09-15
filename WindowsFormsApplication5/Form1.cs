@@ -51,7 +51,8 @@ namespace WindowsFormsApplication5
             MessageQueue mq = (MessageQueue)sender;
             mq.Formatter = new XmlMessageFormatter(new Type[]
             {
-                typeof(Employee)
+                typeof(Employee),
+                typeof(Management)
             });
 
             System.Messaging.Message m = mq.EndReceive(e.AsyncResult);
@@ -61,12 +62,22 @@ namespace WindowsFormsApplication5
                 case "Employee":
                     Process((Employee)m.Body);
                     break;
+                case "Management":
+                    Process((Management)m.Body);
+                    break;
             }
         }
 
 
         private void Process(Employee employee)
         {
+            //Write to the database/update UI/do some calculations/send to another MSMQ/Write to the PLC
+            //How to test this?
+        }
+
+        private void Process(Management management)
+        {
+            //Write to the database/update UI/do some calculations/send to another MSMQ/Write to the PLC
             //How to test this?
         }
 
@@ -83,5 +94,14 @@ namespace WindowsFormsApplication5
         public string LastName { get; set; }
         public string Department { get; set; }
         public string JobTitle { get; set; }
+    }
+
+    public class Management
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Department { get; set; }
+        public string JobTitle { get; set; }
+        public int ManagementLevel { get; set; }
     }
 }
